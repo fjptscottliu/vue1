@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+<div id="root">
+  <input placeholder="名字" type="text" v-model="firstn"><br/>
+  <input placeholder="第二" type="text" v-model="secondname"><br/>
+  <span>{{result}}</span>
+</div>
+
+</body>
+<script type="text/javascript">
+  Vue.config.productionTip = false;
+  
+
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      firstn: 'liu',
+      secondname: 'hy',
+      result: 'sss'
+    },
+
+    watch: {
+      firstn(val) {
+        console.log(this)
+        this.result = val + '.'+this.secondname
+      },
+      secondname(val) {
+        this.result = this.firstn + '.'+val
+      }
+    },
+    computed:{
+      result:{
+        get(){
+          console.log('get调用');
+          return this.firstn+'.'+this.secondname();
+        },
+        set(value){
+          console.log('set调用',value);
+          const arr = value.split('.');
+          this.firstn = arr[0];
+          this.secondname = arr[1];
+
+
+        }
+      }
+
+    }
+  })
+</script>
+</html>
